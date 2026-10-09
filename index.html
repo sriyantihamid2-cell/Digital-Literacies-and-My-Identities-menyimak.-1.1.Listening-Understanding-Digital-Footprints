@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Footprints - MA English Phase F</title>
+    <style>
+        :root {
+            /* Denim Blue & Soft Pink Palette */
+            --primary-denim: #4A708B; /* Denim Blue */
+            --dark-denim: #324b5e;
+            --light-denim: #E8EEF2;
+            --accent-pink: #F9D5E5; /* Soft Pink */
+            --dark-pink: #D98CB3;
+            --bg-color: #FDFEFE;
+            --text-dark: #2C3E50;
+            --white: #FFFFFF;
+            --danger: #E74C3C;
+            --success: #27AE60;
+            --shadow: 0 8px 16px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-denim), var(--dark-denim));
+            color: var(--white);
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 6px solid var(--accent-pink);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.15rem;
+            color: var(--accent-pink);
+            font-weight: 600;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+            background: var(--white);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background-color: var(--white);
+            color: var(--primary-denim);
+            border: 2px solid var(--primary-denim);
+            padding: 12px 25px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background-color: var(--primary-denim);
+            color: var(--white);
+            border-color: var(--primary-denim);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(74, 112, 139, 0.3);
+        }
+
+        main {
+            max-width: 900px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .section-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 35px;
+            box-shadow: var(--shadow);
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+            border-top: 5px solid var(--primary-denim);
+        }
+
+        .section-card.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--primary-denim);
+            border-bottom: 2px dashed var(--dark-pink);
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .materi-content {
+            background: var(--light-denim);
+            border-left: 6px solid var(--primary-denim);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .materi-content h3 {
+            color: var(--primary-denim);
+            margin-bottom: 15px;
+            font-size: 1.35rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dialogue p {
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+        
+        .dialogue strong {
+            color: var(--dark-denim);
+        }
+
+        .vocab-box {
+            background: var(--accent-pink);
+            border: 1px solid var(--dark-pink);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+        }
+        
+        .vocab-box h4 {
+            color: var(--dark-denim);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .vocab-box ul {
+            list-style-type: none;
+        }
+
+        .vocab-box li {
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+        .vocab-box strong { color: #8A4B6B; }
+
+        .sim-container {
+            background: #fcfcfc;
+            border: 2px solid var(--light-denim);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .profile-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            border: 1px solid var(--light-denim);
+        }
+
+        .avatar {
+            width: 85px;
+            height: 85px;
+            background: var(--primary-denim);
+            color: var(--accent-pink);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.2rem;
+            font-weight: bold;
+            border: 4px solid var(--accent-pink);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .reputation-bar-container {
+            flex-grow: 1;
+        }
+
+        .rep-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--dark-denim);
+            font-size: 1.1rem;
+        }
+
+        .rep-track {
+            width: 100%;
+            height: 22px;
+            background: #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+        }
+
+        .rep-fill {
+            height: 100%;
+            width: 50%; 
+            background: var(--primary-denim);
+            border-radius: 12px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.5s ease;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            background: var(--white);
+            border: 2px solid var(--light-denim);
+            padding: 18px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.05rem;
+            font-weight: 500;
+            transition: var(--transition);
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            color: var(--text-dark);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .action-btn:hover:not(:disabled) {
+            border-color: var(--dark-pink);
+            background: var(--accent-pink);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(217, 140, 179, 0.2);
+        }
+
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f5f5f5;
+            border-color: #ddd;
+        }
+
+        .feedback-log {
+            margin-top: 30px;
+            max-height: 250px;
+            overflow-y: auto;
+            background: var(--white);
+            border: 2px solid var(--light-denim);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .log-entry {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--light-denim);
+            animation: fadeIn 0.4s;
+        }
+        
+        .log-entry:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0;}
+        .log-pos { color: var(--success); font-weight: bold; }
+        .log-neg { color: var(--danger); font-weight: bold; }
+
+        .quiz-question {
+            display: none;
+        }
+        
+        .quiz-question.active {
+            display: block;
+            animation: fadeIn 0.4s;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .quiz-btn {
+            background: var(--white);
+            border: 2px solid var(--primary-denim);
+            color: var(--text-dark);
+            padding: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1.05rem;
+            transition: var(--transition);
+        }
+
+        .quiz-btn:hover:not(:disabled) {
+            background: var(--light-denim);
+            padding-left: 22px;
+        }
+
+        .quiz-btn.correct { 
+            background: var(--success); 
+            color: white; 
+            border-color: var(--success); 
+        }
+        
+        .quiz-btn.wrong { 
+            background: var(--danger); 
+            color: white; 
+            border-color: var(--danger); 
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--light-denim);
+            border-radius: 10px;
+            border-left: 6px solid var(--primary-denim);
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+
+        .nav-controls {
+            margin-top: 30px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .next-btn {
+            background: var(--primary-denim);
+            color: var(--white);
+            border: none;
+            padding: 14px 35px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            display: none;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(74, 112, 139, 0.3);
+        }
+
+        .next-btn:hover { 
+            background: var(--dark-denim); 
+            transform: scale(1.05); 
+        }
+
+        #quiz-result {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .score-circle {
+            width: 160px;
+            height: 160px;
+            background: var(--white);
+            border: 10px solid var(--primary-denim);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 25px;
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: var(--primary-denim);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .action-grid { grid-template-columns: 1fr; }
+            .nav-btn { padding: 10px 15px; font-size: 0.95rem; flex: 1 1 calc(50% - 10px); justify-content: center;}
+            header h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>English - Phase F (Class XI)</h1>
+        <p>Digital Literacies and My Identities: Understanding Digital Footprints</p>
+    </header>
+
+    <nav>
+        <button class="nav-btn active" onclick="switchTab('materi', this)">📚 1. Read & Listen</button>
+        <button class="nav-btn" onclick="switchTab('simulasi', this)">🕹️ 2. Digital Identity Explorer</button>
+        <button class="nav-btn" onclick="switchTab('kuis', this)">📝 3. Formative Quiz</button>
+    </nav>
+
+    <main>
+        <section id="materi" class="section-card active">
+            <h2>Part 1: Understanding Digital Footprints</h2>
+            <p style="margin-bottom: 20px; font-size: 1.1rem;">Welcome, students of Madrasah Aliyah! Today we will learn how to build our digital identity. Read the transcript below carefully. You can practice this dialogue with your group members!</p>
+            
+            <div class="materi-content">
+                <h3>📖 Dialogue Transcript: A Visit to Danau Limboto</h3>
+                <div class="dialogue">
+                    <p><strong>Rina:</strong> "The sunset at Danau Limboto is breathtaking today! I should live-stream it on my Instagram and share my exact location so everyone can join us."</p>
+                    <p><strong>Budi:</strong> "Wait, Rina. Remember what we learned in Mr. Andi's class about <em>Digital Footprints</em>? Sharing your live location might not be safe."</p>
+                    <p><strong>Rina:</strong> "Digital footprint? You mean like my internet search history?"</p>
+                    <p><strong>Budi:</strong> "Yes, but there are two types. An <strong>Active Digital Footprint</strong> is what you purposely share, like your photos, comments, or a live-stream. A <strong>Passive Digital Footprint</strong> is data collected without you knowing, like a website tracking your IP address."</p>
+                    <p><strong>Rina:</strong> "Oh, I see. So, everything I post online forms my digital identity?"</p>
+                    <p><strong>Budi:</strong> "Exactly! And once it's on the internet, it's very hard to erase. It could affect our future, like when applying for universities. A positive footprint, like sharing a video about Gorontalo culture, is great. But oversharing private info or bad behavior leaves a negative footprint."</p>
+                    <p><strong>Rina:</strong> "Wow, I should be more careful. I will just post a beautiful picture later with a good caption about nature conservation."</p>
+                </div>
+            </div>
+
+            <div class="vocab-box">
+                <h4>🔑 Key Vocabulary & Phrases:</h4>
+                <ul>
+                    <li><strong>Digital Footprint:</strong> Jejak digital (rekaman aktivitas kita di internet).</li>
+                    <li><strong>Active Footprint:</strong> Jejak yang sengaja kita tinggalkan (posting, komentar, upload).</li>
+                    <li><strong>Passive Footprint:</strong> Jejak yang tertinggal tanpa disadari (cookies, IP tracker).</li>
+                    <li><strong>Digital Identity:</strong> Identitas digital (reputasi online kita).</li>
+                    <li><strong>Oversharing:</strong> Membagikan terlalu banyak informasi pribadi di internet.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="simulasi" class="section-card">
+            <h2>Part 2: Shape Your Digital Identity</h2>
+            <p>You are managing your social media account. Make choices below by clicking the action cards. Watch how your choices affect your <strong>Digital Reputation Score</strong>. Try to build a positive and inspiring identity!</p>
+            
+            <div class="sim-container">
+                <div class="profile-card">
+                    <div class="avatar">MA</div>
+                    <div class="reputation-bar-container">
+                        <div class="rep-title">
+                            <span>Your Digital Reputation</span>
+                            <span id="rep-score-text">50 / 100</span>
+                        </div>
+                        <div class="rep-track">
+                            <div class="rep-fill" id="rep-bar"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--primary-denim); margin-bottom: 15px; font-size: 1.2rem;">Choose an online action:</h3>
+                <div class="action-grid" id="action-buttons">
+                    <!-- Buttons generated via JS -->
+                </div>
+
+                <div class="feedback-log" id="feedback-log">
+                    <em style="color: #666;">Your digital footprint history will appear here...</em>
+                </div>
+            </div>
+        </section>
+
+        <section id="kuis" class="section-card">
+            <h2>Part 3: Formative Quiz</h2>
+            <p style="margin-bottom: 25px; font-size: 1.1rem;">Test your understanding based on the dialogue and the simulation activity.</p>
+            
+            <div id="student-form" class="sim-container" style="display: block; margin-bottom: 20px;">
+                <h3 style="color: var(--primary-denim); margin-bottom: 15px;">Data Siswa (Wajib diisi sebelum kuis)</h3>
+                <input type="text" id="student-name" placeholder="Masukkan Nama Lengkap" style="width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid var(--primary-denim); font-size: 1rem;">
+                <input type="text" id="student-class" placeholder="Masukkan Kelas (Contoh: XI IPA 1)" style="width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 8px; border: 1px solid var(--primary-denim); font-size: 1rem;">
+                <button class="nav-btn" style="width: 100%; justify-content: center; background: var(--primary-denim); color: white;" onclick="startQuiz()">Mulai Kuis ➔</button>
+            </div>
+
+            <!-- Quiz container awalnya disembunyikan sampai siswa mengisi data -->
+            <div id="quiz-container" style="display: none;">
+                <!-- Quiz dynamically injected here -->
+            </div>
+            
+            <div class="nav-controls">
+                <button id="next-btn" class="next-btn" onclick="nextQuestion()">Next Question ➔</button>
+            </div>
+            
+            <div id="quiz-result" style="display: none;">
+                <div class="score-circle" id="final-score">0</div>
+                <h3 style="font-size: 2rem; color: var(--primary-denim); margin-bottom: 15px;">Quiz Completed!</h3>
+                <p id="score-message" style="font-size: 1.15rem; margin-bottom: 15px; color: var(--text-dark);"></p>
+                
+                <div id="submit-msg" style="font-size: 1.1rem; font-weight: bold; margin-bottom: 25px; padding: 15px; border-radius: 8px; background: var(--light-denim); text-align: center;"></div>
+                
+                <button class="nav-btn" style="margin: 0 auto; background: var(--accent-pink); border-color: var(--dark-pink); color: var(--dark-denim);" onclick="resetQuiz()">🔄 Retake Quiz</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        /* TAB NAVIGATION LOGIC */
+        function switchTab(tabId, btnElement) {
+            document.querySelectorAll('.section-card').forEach(card => card.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            btnElement.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* SIMULATION (DIGITAL EXPLORER) LOGIC */
+        let reputation = 50;
+        const maxRep = 100;
+        const minRep = 0;
+        
+        const repBar = document.getElementById('rep-bar');
+        const repScoreText = document.getElementById('rep-score-text');
+        const feedbackLog = document.getElementById('feedback-log');
+        const actionGrid = document.getElementById('action-buttons');
+
+        const actions = [
+            {
+                icon: "📸",
+                text: "Upload a vlog about Gorontalo's local food, Binte Biluhuta.",
+                impact: 20,
+                feedback: "Excellent! Promoting local culture builds an amazing and educational digital footprint."
+            },
+            {
+                icon: "🤬",
+                text: "Argue aggressively with a stranger who insulted Danau Limboto.",
+                impact: -15,
+                feedback: "Careful! Even if you defend something good, using aggressive language leaves a negative digital footprint."
+            },
+            {
+                icon: "🍪",
+                text: "Click 'Accept All Cookies' on an unknown website without reading.",
+                impact: -10,
+                feedback: "Oops! You are unknowingly increasing your passive digital footprint, allowing third parties to track your data."
+            },
+            {
+                icon: "🌱",
+                text: "Share an inspiring quote about nature conservation.",
+                impact: 15,
+                feedback: "Great job! Sharing positive content reflects well on your character and digital identity."
+            },
+            {
+                icon: "📍",
+                text: "Post your home address and phone number openly on Facebook.",
+                impact: -25,
+                feedback: "Danger! Oversharing private info makes you vulnerable to identity theft and compromises your safety."
+            },
+            {
+                icon: "🎓",
+                text: "Create a blog post summarizing your school project.",
+                impact: 15,
+                feedback: "Awesome! Educational content is highly respected by future universities and employers."
+            }
+        ];
+
+        function updateReputationBar() {
+            repScoreText.textContent = `${reputation} / 100`;
+            repBar.style.width = `${reputation}%`;
+            
+            if (reputation > 75) {
+                repBar.style.backgroundColor = 'var(--success)';
+            } else if (reputation < 40) {
+                repBar.style.backgroundColor = 'var(--danger)';
+            } else {
+                repBar.style.backgroundColor = 'var(--primary-denim)';
+            }
+        }
+
+        function handleAction(index, btnElement) {
+            const action = actions[index];
+            
+            // Calculate new reputation
+            reputation += action.impact;
+            if(reputation > maxRep) reputation = maxRep;
+            if(reputation < minRep) reputation = minRep;
+            
+            updateReputationBar();
+            btnElement.disabled = true;
+
+            // Clear placeholder text if it's the first log
+            if (feedbackLog.innerHTML.includes('will appear here')) {
+                feedbackLog.innerHTML = '';
+            }
+
+            // Create log entry
+            const logDiv = document.createElement('div');
+            logDiv.className = 'log-entry';
+            
+            const isPos = action.impact > 0;
+            const sign = isPos ? '+' : '';
+            const logColorClass = isPos ? 'log-pos' : 'log-neg';
+            
+            logDiv.innerHTML = `
+                <div style="font-size: 1.05rem;"><strong>Action:</strong> ${action.icon} ${action.text}</div>
+                <div style="margin-top: 8px; font-size: 1rem; line-height: 1.4;">
+                    <span class="${logColorClass}">[${sign}${action.impact} Rep]</span> 
+                    ${action.feedback}
+                </div>
+            `;
+            
+            feedbackLog.insertBefore(logDiv, feedbackLog.firstChild);
+        }
+
+        // Initialize Simulation
+        function initSimulation() {
+            actionGrid.innerHTML = '';
+            reputation = 50;
+            updateReputationBar();
+            feedbackLog.innerHTML = '<em style="color: #666;">Your digital footprint history will appear here...</em>';
+            
+            actions.forEach((action, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'action-btn';
+                btn.innerHTML = `<span style="font-size: 1.5rem;">${action.icon}</span> <span>${action.text}</span>`;
+                btn.onclick = () => handleAction(index, btn);
+                actionGrid.appendChild(btn);
+            });
+        }
+        initSimulation();
+
+        const quizData = [
+            {
+                q: "Based on the dialogue, what is the definition of a Digital Footprint?",
+                opts: [
+                    "A footprint we leave in the sand when visiting Danau Limboto.",
+                    "The trail of data we leave behind when using the internet.",
+                    "A specific application used to track walking steps.",
+                    "The physical components of a smartphone or computer."
+                ],
+                ans: 1,
+                exp: "Correct! A digital footprint is the record or trail of all your interactions and data left on the internet."
+            },
+            {
+                q: "Which of the following is an example of an ACTIVE digital footprint?",
+                opts: [
+                    "A website tracking your IP address secretly.",
+                    "An application recording your location without permission.",
+                    "Intentionally posting a photo of Danau Limboto on Instagram.",
+                    "Browser cookies saving your search history automatically."
+                ],
+                ans: 2,
+                exp: "Exactly! Active footprints are things you *intentionally* share online, like posts, emails, and comments."
+            },
+            {
+                q: "Why did Budi warn Rina about sharing her live location?",
+                opts: [
+                    "Because it uses too much of her internet quota.",
+                    "Because sharing live locations can compromise personal safety.",
+                    "Because Danau Limboto does not have good internet signal.",
+                    "To make sure her phone battery does not run out quickly."
+                ],
+                ans: 1,
+                exp: "Right! Sharing exact live locations can invite strangers and compromise your personal safety. It is a form of oversharing."
+            },
+            {
+                q: "What is a 'Passive Digital Footprint'?",
+                opts: [
+                    "Information collected about you online without your direct knowledge.",
+                    "Data you permanently delete from your mobile phone.",
+                    "A social media account that you no longer use.",
+                    "Photos you privately send to your family members."
+                ],
+                ans: 0,
+                exp: "Correct! Passive footprints occur without your direct action, like websites collecting your IP address or browser cookies."
+            },
+            {
+                q: "How does uploading a video about Gorontalo's local culture affect an MA student's digital identity?",
+                opts: [
+                    "It creates a negative passive footprint.",
+                    "It ruins their chances of being accepted into university.",
+                    "It deletes their previous bad digital footprints.",
+                    "It builds a positive, educational digital reputation."
+                ],
+                ans: 3,
+                exp: "Excellent! Sharing educational and culturally rich content builds a very positive digital identity that employers and universities respect."
+            }
+        ];
+
+        let currentQIndex = 0;
+        let score = 0;
+        let isAnswered = false;
+
+        // Variabel untuk Database
+        let studentName = "";
+        let studentClass = "";
+        let studentAnswers = [];
+        let correctCount = 0;
+        let wrongCount = 0;
+        let startTime = 0;
+        
+        // PENTING: URL Web App dari Google Apps Script Anda
+        const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxtJOUevbkZZB-xjcbu4y3v9eij15gyhQ5dPOJc63qGK8TYUPBQhsszQuGXI5unnNr6qA/exec'; 
+
+        const studentForm = document.getElementById('student-form');
+        const quizContainer = document.getElementById('quiz-container');
+        const nextBtn = document.getElementById('next-btn');
+        const resultSection = document.getElementById('quiz-result');
+
+        function startQuiz() {
+            const nameInput = document.getElementById('student-name').value.trim();
+            const classInput = document.getElementById('student-class').value.trim();
+
+            if (!nameInput || !classInput) {
+                alert("Mohon isi Nama dan Kelas terlebih dahulu!");
+                return;
+            }
+
+            studentName = nameInput;
+            studentClass = classInput;
+            studentForm.style.display = 'none';
+            quizContainer.style.display = 'block';
+            startTime = Date.now(); // Catat waktu mulai pengerjaan
+        }
+
+        function loadQuiz() {
+            quizContainer.innerHTML = '';
+            
+            quizData.forEach((item, qIndex) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = `quiz-question ${qIndex === 0 ? 'active' : ''}`;
+                qDiv.id = `q-block-${qIndex}`;
+                
+                const qText = document.createElement('h3');
+                qText.style.color = 'var(--primary-denim)';
+                qText.style.fontSize = '1.3rem';
+                qText.textContent = `Question ${qIndex + 1} of 5: ${item.q}`;
+                qDiv.appendChild(qText);
+
+                const optsDiv = document.createElement('div');
+                optsDiv.className = 'quiz-options';
+
+                item.opts.forEach((optText, optIndex) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'quiz-btn';
+                    btn.textContent = optText;
+                    btn.onclick = () => checkAnswer(btn, optIndex, qIndex);
+                    optsDiv.appendChild(btn);
+                });
+                
+                qDiv.appendChild(optsDiv);
+
+                const expDiv = document.createElement('div');
+                expDiv.className = 'explanation';
+                expDiv.id = `exp-${qIndex}`;
+                expDiv.innerHTML = `<strong>Feedback:</strong> ${item.exp}`;
+                qDiv.appendChild(expDiv);
+
+                quizContainer.appendChild(qDiv);
+            });
+        }
+
+        function checkAnswer(selectedBtn, selectedIndex, qIndex) {
+            if (isAnswered) return;
+            isAnswered = true;
+
+            const currentData = quizData[qIndex];
+            const allBtns = document.querySelectorAll(`#q-block-${qIndex} .quiz-btn`);
+
+            // Simpan jawaban spesifik yang dipilih siswa ke dalam array
+            studentAnswers[qIndex] = selectedBtn.textContent;
+
+            if (selectedIndex === currentData.ans) {
+                selectedBtn.classList.add('correct');
+                score += 20; 
+                correctCount++;
+            } else {
+                selectedBtn.classList.add('wrong');
+                allBtns[currentData.ans].classList.add('correct');
+                wrongCount++;
+            }
+
+            allBtns.forEach(b => {
+                b.disabled = true;
+                b.style.cursor = 'default';
+            });
+
+            document.getElementById(`exp-${qIndex}`).style.display = 'block';
+            nextBtn.style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            document.getElementById(`q-block-${currentQIndex}`).classList.remove('active');
+            currentQIndex++;
+            isAnswered = false;
+            nextBtn.style.display = 'none';
+
+            if (currentQIndex < quizData.length) {
+                document.getElementById(`q-block-${currentQIndex}`).classList.add('active');
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            quizContainer.style.display = 'none';
+            resultSection.style.display = 'block';
+            
+            document.getElementById('final-score').textContent = score;
+            
+            const msg = document.getElementById('score-message');
+            if (score === 100) {
+                msg.innerHTML = "🎉 Excellent! You have perfectly mastered the concept of Digital Footprints.";
+            } else if (score >= 60) {
+                msg.innerHTML = "👍 Good job! Review the materials to perfect your understanding.";
+            } else {
+                msg.innerHTML = "💪 Keep learning! Read the dialogue transcript again and try the quiz one more time.";
+            }
+
+            // Kirim data ke database Google Sheets
+            submitToDatabase();
+        }
+
+        async function submitToDatabase() {
+            const submitMsg = document.getElementById('submit-msg');
+            submitMsg.innerHTML = "⏳ Mengirim data ke server (Google Sheets)...";
+            submitMsg.style.color = "var(--primary-denim)";
+
+            if (GOOGLE_APP_SCRIPT_URL === 'URL_WEB_APP_GOOGLE_SCRIPT_ANDA_DISINI') {
+                submitMsg.innerHTML = "⚠️ PERINGATAN: URL Google App Script belum diatur oleh guru. Hubungi guru mata pelajaran.";
+                submitMsg.style.color = "var(--danger)";
+                return;
+            }
+
+            // Hitung durasi pengerjaan dalam satuan detik
+            const timeTaken = Math.floor((Date.now() - startTime) / 1000); 
+
+            // Bangun payload JSON yang akan dikirim
+            const payload = {
+                nama: studentName,
+                kelas: studentClass,
+                waktuPengerjaan: timeTaken,
+                benar: correctCount,
+                salah: wrongCount,
+                skor: score,
+                jawaban: studentAnswers
+            };
+
+            try {
+                // Gunakan header text/plain untuk menghindari CORS preflight block pada hosting gratis seperti Github
+                const response = await fetch(GOOGLE_APP_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(payload),
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+                });
+                
+                const result = await response.json();
+                if(result.status === 'success') {
+                    submitMsg.innerHTML = "✅ Hasil evaluasi berhasil disimpan ke Database!";
+                    submitMsg.style.color = "var(--success)";
+                } else {
+                    submitMsg.innerHTML = "❌ Gagal menyimpan data: " + result.message;
+                    submitMsg.style.color = "var(--danger)";
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                submitMsg.innerHTML = "❌ Terjadi kesalahan jaringan. Gagal menghubungi server database.";
+                submitMsg.style.color = "var(--danger)";
+            }
+        }
+
+        function resetQuiz() {
+            currentQIndex = 0;
+            score = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            studentAnswers = [];
+            isAnswered = false;
+            
+            resultSection.style.display = 'none';
+            
+            // Tampilkan kembali form pengisian nama jika berganti perangkat / retake
+            document.getElementById('student-name').value = '';
+            document.getElementById('student-class').value = '';
+            studentForm.style.display = 'block';
+            quizContainer.style.display = 'none';
+            
+            nextBtn.style.display = 'none';
+            loadQuiz();
+            initSimulation(); // Reset simulation as well
+            switchTab('materi', document.querySelectorAll('.nav-btn')[0]); // Go back to tab 1
+        }
+
+        // Initialize quiz on load
+        loadQuiz();
+    </script>
+</body>
+</html>
